@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Examen blanc : Français, dictée</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@600;800&family=Nunito:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f7f9ff;--ink:#1f2350;--card:#fff;--line:#d3def5;--mut:#5b6190;--acc:#4b3fd6;--onacc:#fff;--ok:#1a8a5a;--ko:#c93a4f;--wn:#d9822b;--mg:#e8708a;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#12142b;--ink:#e6e9ff;--card:#1b1e3d;--line:#2b3060;--mut:#9aa1d6;--acc:#9d93ff;--onacc:#14163a;--ok:#4cd493;--ko:#ff7d90;--wn:#f0a458;--mg:#b4506a;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#12142b;--ink:#e6e9ff;--card:#1b1e3d;--line:#2b3060;--mut:#9aa1d6;--acc:#9d93ff;--onacc:#14163a;--ok:#4cd493;--ko:#ff7d90;--wn:#f0a458;--mg:#b4506a;color-scheme:dark}
+html{scroll-padding-top:calc(90px + env(safe-area-inset-top,0px))}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.55 Nunito,system-ui,sans-serif;background-image:linear-gradient(var(--line) 1px,transparent 1px);background-size:100% 32px}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);background:var(--bg);z-index:10}
+h1,h2,h3{font-family:"Bricolage Grotesque",Nunito,sans-serif;margin:0;line-height:1.15}
+main{max-width:740px;margin:0 auto;padding:20px 18px 80px 34px;border-left:2px solid var(--mg);min-height:100vh}
+.card{background:var(--card);border:1.5px solid var(--line);border-radius:14px;padding:18px 20px;margin:16px 0}
+button{font:inherit;font-weight:800;border:0;border-radius:10px;padding:11px 18px;background:var(--acc);color:var(--onacc);cursor:pointer;margin:4px 4px 4px 0}
+button.alt{background:transparent;color:var(--acc);border:2px solid var(--acc)}
+button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible,label:focus-within{outline:3px solid var(--wn);outline-offset:2px}
+header.bar{position:sticky;top:env(safe-area-inset-top,0px);z-index:11;background:var(--card);border-bottom:2px solid var(--line);display:flex;justify-content:space-between;align-items:center;gap:12px;padding:10px 16px}
+#clk{font:800 28px "Bricolage Grotesque",sans-serif;font-variant-numeric:tabular-nums}
+#clk.w{color:var(--ko)}
+.sm{color:var(--mut);font-size:14px}
+.pt{background:var(--acc);color:var(--onacc);border-radius:99px;padding:1px 10px;font-size:13px;font-weight:800;white-space:nowrap}
+.q{background:var(--card);border:1.5px solid var(--line);border-radius:12px;padding:14px 18px;margin:12px 0}
+.q .h{display:flex;justify-content:space-between;gap:8px;margin-bottom:6px;font-weight:800}
+.q.good{border-left:6px solid var(--ok)}.q.mid{border-left:6px solid var(--wn)}.q.bad{border-left:6px solid var(--ko)}
+.opt{display:block;padding:9px 12px;margin:6px 0;border:1.5px solid var(--line);border-radius:9px;cursor:pointer}
+.opt:has(input:checked){border-color:var(--acc);background:color-mix(in srgb,var(--acc) 14%,transparent)}
+.opt input{margin-right:8px;accent-color:var(--acc)}
+select,textarea{font:inherit;padding:9px 12px;border:2px solid var(--line);border-radius:9px;background:var(--bg);color:var(--ink)}
+textarea{width:100%;min-height:220px;font-size:19px;line-height:1.7;resize:vertical}
+.it{display:flex;align-items:center;gap:10px;margin:8px 0;flex-wrap:wrap}.it>span{min-width:150px;font-weight:600}
+.ex{color:var(--mut);font-size:15px;margin-top:6px}
+.big{font:800 64px "Bricolage Grotesque",sans-serif;color:var(--acc);line-height:1}
+.bar2{height:14px;background:var(--line);border-radius:8px;overflow:hidden;margin:4px 0 2px}
+.bar2 b{display:block;height:100%}
+.row{display:flex;justify-content:space-between;gap:10px;font-weight:800}
+.ok{color:var(--ok)}.ko{color:var(--ko);font-weight:800;text-decoration:underline wavy}.am{color:var(--wn)}
+.dtx{line-height:2.1;font-size:18px}.dtx small{font-size:12px;color:var(--mut)}
+#msg{color:var(--wn);font-weight:800;margin:10px 0}
+input[type=range]{accent-color:var(--acc);vertical-align:middle}
+ul{padding-left:20px}
+</style>
+</head>
+<body>
+<div id="app"></div>
+<script>
+const $=s=>document.querySelector(s);
+const R=a=>a[Math.floor(Math.random()*a.length)];
+const sh=a=>a.map(x=>[Math.random(),x]).sort((x,y)=>x[0]-y[0]).map(x=>x[1]);
+const dec=v=>String(v).replace(".",",");
+const esc=s=>String(s).replace(/[&<>]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;"}[c]));
+const nz=s=>String(s).toLowerCase().replace(/œ/g,"oe").normalize("NFD").replace(/[\u0300-\u036f]/g,"").replace(/[^a-z0-9]/g,"");
+const nk=s=>String(s).toLowerCase().replace(/[^\p{L}\p{N}]/gu,"");
+const THEMES=["Cours : mots invariables","Cours : doublement des consonnes","Dictée : mots invariables","Dictée : doublement des consonnes","Dictée : autres mots"];
+const TIPS=[
+"Un mot invariable ne change jamais de forme. 4 classes : conjonction (coordination : mais, ou, et, donc, or, ni, car ; subordination : que, quand, parce que, lorsque, comme, puisque), préposition (à, dans, par, pour, en, vers, avec, de, sans, sous, sur, chez), adverbe (peut en général être supprimé), interjection (Oh ! Zut ! Bravo !).",
+"Consonne doublée : pour le son « è » (belle, jette), pour appuyer un son (poisson, accent, fille), après un préfixe (illisible, irrégulier, immobile ; mais imprudent, inutilisable), avec un suffixe (barquette), mots à retenir (adresse, appeler, offrande, grammaire) et homophones (cane/canne, sale/salle, balade/ballade, date/datte).",
+"Dans la dictée, les mots invariables ne prennent jamais de s ni de marque d’accord : relis-les lettre par lettre (vraiment, doucement, toujours, beaucoup…).",
+"Dans la dictée, pense à la règle : son « è » (ll, tt, nn), ss pour le son [s], préfixes il-/ir-, homophones (salle/sale, cane/canne, balade/ballade, date/datte) et famille de mots (sifflements → siffler).",
+"Pour les autres mots, utilise ta relecture en 3 passes : consonnes doubles, mots invariables, puis chasse aux oublis et aux mots collés."];
+const HINT={belle:"ll : fait entendre le « è »",salle:"2 l, comme un château à 2 ailes (la pièce) ; sale = 1 l",balade:"1 l : la promenade, libre comme l’air",ballade:"2 l : le poème chanté, comme les 2 ailes d’un oiseau",cane:"1 n, comme un âne (l’oiseau)",canne:"2 n, comme l’homme avec ses 2 jambes (le bâton)",date:"1 t : la date du jour",datte:"2 t : le fruit",adresse:"mot à mémoriser (dd, ss)",appelle:"mot à mémoriser (ll)",offrande:"mot à mémoriser (ff)",barquette:"suffixe diminutif -ette (barque → barquette)",illisible:"préfixe il- + lisible",irregulier:"préfixe ir- + régulier",poisson:"ss pour faire le son [s]",grille:"ill : le son [ye]",femelle:"ll : le « è »",marmotte:"tt : le « è »",sifflements:"ff : même famille que siffler",nouvelles:"ll : le « è »",caresse:"ss : le son [s]",corrigeons:"rr : famille de correction",erreurs:"rr : famille de erreur",impressionnant:"mot à mémoriser (mm, nn)",jette:"tt : le « è »"};
+/* ---------- Partie A : questions de cours ---------- */
+const CL=["Conjonction de coordination","Conjonction de subordination","Préposition","Adverbe","Interjection"];
+const CB=[["Zut","Interjection","<b>Zut</b> ! J’ai oublié mes clés."],["rapidement","Adverbe","Il court <b>rapidement</b> vers la sortie."],["vers","Préposition","Il court rapidement <b>vers</b> la sortie."],["quand","Conjonction de subordination","Nous restons à la maison <b>quand</b> il pleut."],["or","Conjonction de coordination","Elle chante bien <b>or</b> elle stresse beaucoup."],["beaucoup","Adverbe","Elle chante bien or elle stresse <b>beaucoup</b>."],["chez","Préposition","Il vient <b>chez</b> nous ce soir."],["parce que","Conjonction de subordination","Elle réussit <b>parce qu’</b>elle s’entraîne."],["mais","Conjonction de coordination","Il travaille <b>mais</b> il progresse peu."],["très","Adverbe","Elle parle <b>très</b> doucement."],["Bravo","Interjection","<b>Bravo</b> ! Tu as gagné."],["sans","Préposition","Il part <b>sans</b> dire un mot."]];
+const SP=[["adresse","adrese"],["appellation","apelation"],["illégal","ilégal"],["offrande","ofrande"],["impressionnant","impressionant"],["grammaire","gramaire"],["caresse","carese"],["battre","batre"],["donner","doner"],["barquette","barquete"],["irrégulier","irégulier"],["immobile","imobile"]];
+const HO=[["Je pars en ___ (une promenade) au bord du lac.","balade","ballade"],["Le chanteur interprète une ___ (un poème chanté).","ballade","balade"],["Le vieil homme marche avec une ___.","canne","cane"],["La ___ (femelle du canard) nage sur l’étang.","cane","canne"],["Mon chat est très ___ : il faut le laver.","sale","salle"],["Les élèves entrent dans la ___ de classe.","salle","sale"],["Elle mange une ___ (le fruit du palmier).","datte","date"],["Note la ___ du jour sur ton cahier.","date","datte"]];
+const C=(th,pts,html,ok,bad,expl)=>{const o=sh([ok,...bad]);return{th,pts,html,t:"c",opts:o,ans:o.indexOf(ok),show:ok,expl}};
+const S=(th,pts,html,items,expl)=>({th,pts,html,t:"s",items,expl});
+function genA(){
+ const q=[];
+ q.push(C(0,1,"Un mot invariable est un mot qui :","ne change jamais d’orthographe (ni genre, ni nombre, ni terminaison verbale)",["prend toujours un s au pluriel","se conjugue selon le sujet","change de forme au féminin"],"Un mot invariable ne s’accorde jamais."));
+ q.push(S(0,2,"Donne la classe grammaticale de chaque mot en gras.",sh(CB).slice(0,4).map(c=>({l:c[2],c:c[1],o:CL})),"Conjonctions : coordination (mais, ou, et, donc, or, ni, car) / subordination (que, quand, parce que…). Préposition : à, dans, vers, chez, sans… Adverbe : précise le sens d’un verbe, d’un adjectif ou d’un adverbe. Interjection : exprime une émotion."));
+ q.push(R([0,1])?C(0,1,"Quelle liste contient uniquement des conjonctions de coordination ?","mais, ou, et, or, ni, car",["mais, que, quand, car","parce que, lorsque, comme, et","ou, dans, par, car"],"Les conjonctions de coordination : mais, ou, et, donc, or, ni, car."):C(0,1,"Quelle est la différence entre l’adverbe et la préposition ?","L’adverbe peut en général être supprimé ; la préposition introduit un complément et ne s’emploie pas seule",["La préposition peut toujours être supprimée ; l’adverbe introduit un complément","L’adverbe s’accorde, la préposition ne s’accorde pas","Il n’y a aucune différence"],"Exemple : « Avant, Leïla rendait visite à ses amis » : on peut supprimer l’adverbe « avant »."));
+ q.push(C(0,1,"Quel mot est une interjection ?","Zut !",["Vite","Parce que","Chez"],"Une interjection exprime une émotion ou un bruit : Oh ! Zut ! Bravo ! Crac !"));
+ q.push(S(1,2,"Choisis la bonne orthographe.",sh(SP).slice(0,4).map((p,i)=>({l:"Orthographe n°"+(i+1),c:p[0],o:sh(p)})),"À mémoriser : adresse, appellation, illégal (il- + légal), offrande, impressionnant, grammaire, battre, donner…"));
+ q.push(R([0,1,2,3])==0?C(1,1,"Dans quel mot la consonne doublée fait-elle entendre le son « è » ?","belle",["maison","saison","irréalisable"],"ll, tt, nn après un « e » font entendre « è » : belle, jette, vienne."):R([0,1,2])==0?C(1,1,"Quel mot contient une consonne doublée à cause d’un préfixe ?","irrégulier",["terrible","saison","jette"],"ir- + régulier = irrégulier."):R([0,1])?C(1,1,"Quel est le contraire de « récupérable » ?","irrécupérable",["irécupérable","inrécupérable","imrécupérable"],"ir- devant r : irrécupérable (r doublé)."):C(1,1,"Quel est le contraire de « prudent » ?","imprudent",["impprudent","inprudent","imbrudent"],"im- + prudent = imprudent : attention, la consonne ne double pas à chaque fois."));
+ const h=sh(HO).filter((x,i,a)=>a.findIndex(y=>y[1]==x[1]||y[1]==x[2])==i).slice(0,2);
+ q.push(S(1,1,"Choisis le bon mot (attention aux homophones).",h.map(x=>({l:x[0],c:x[1],o:sh([x[1],x[2]])})),"cane (1 n comme un âne) / canne (2 n) ; sale (1 l) / salle (2 l) ; balade (1 l, promenade) / ballade (2 l, poème) ; date (1 t) / datte (2 t, le fruit)."));
+ q.push(C(1,1,"Pourquoi écrit-on « poisson » avec deux s ?","Pour faire entendre le son [s] entre deux voyelles",["À cause d’un préfixe","Pour marquer le pluriel","Pour faire entendre un « è »"],"ss entre deux voyelles = son [s] (poisson ≠ poison)."));
+ return q;
+}
+/* ---------- Partie B : dictées ---------- */
+const DIC=[
+{id:1,t:"Le gardien et la nature",s:"[i|Zut] ! J’ai oublié mes clés [i|dans] la [d|salle]. Le gardien referme [i|rapidement] la [d|grille] [i|avec] précaution. [i|Dehors], une [d|femelle] [d|marmotte] émet de brefs [d|sifflements] [i|vers] ses petits. Elle s’adapte aux [d|nouvelles] variations [i|car] elle est [i|vraiment] intelligente."},
+{id:2,t:"La promenade",s:"[i|Oh] ! Quelle [d|belle] [d|balade] au bord du lac ! Nous marchons [i|doucement] [i|chez] nos amis [i|parce] [i|que] le chemin est [d|irrégulier]. [i|Soudain], un [d|poisson] argenté bondit [i|sous] la surface [i|et] une [d|cane] nage [i|vers] la rive."},
+{id:3,t:"Le héros et l’offrande",s:"[i|Crac] ! La [d|barquette] de fruits tombe [i|par] terre. Le héros [d|appelle] [i|aussitôt] son ami [i|car] la nuit tombe [i|vite]. Ensemble, ils déposent une [d|offrande] [i|devant] la porte [i|et] reprennent [i|lentement] leur route."},
+{id:4,t:"La lettre",s:"[i|Ouille] ! Cette [d|adresse] est [d|illisible] [i|mais] le facteur [d|jette] [i|toujours] le courrier [i|dans] la boîte. [i|Ensuite], je note la [d|date] [i|sur] mon cahier [i|et] je mange une [d|datte] [i|avec] [i|beaucoup] de plaisir."},
+{id:5,t:"Le film",s:"[i|Zut] ! Ce film est [i|vraiment] [d|impressionnant]. Elle [d|caresse] [i|doucement] le chat [i|quand] il saute [i|sur] la [d|canne] du vieil homme. Nous [d|corrigeons] [i|ensuite] nos [d|erreurs] [i|car] ce verbe est [d|irrégulier]."}];
+function parse(txt){const T=[];txt.split(/\s+/).forEach(w=>{const m=w.match(/^\[([id])\|([^\]]+)\](.*)$/),c=m?m[2]:w.replace(/[.,!?;:]/g,"");
+ if(!nz(c)){if(T.length)T[T.length-1].raw+=" "+w;return}T.push({raw:m?m[2]+m[3]:w,w:c,ty:m?m[1]:"o"})});return T}
+const plain=t=>t.replace(/\[[id]\|([^\]]+)\]/g,"$1");
+function segs(t){const r=[];let p="";(plain(t).match(/[^.!?]+[.!?]+/g)||[]).forEach(s=>{s=(p?p+" ":"")+s.trim();p="";if(s.split(/\s+/).length<=2){p=s;return}r.push(s)});if(p)r.push(p);return r}
+function align(E,Sx){const n=E.length,m=Sx.length,d=Array.from({length:n+1},()=>Array(m+1).fill(0));
+ for(let i=0;i<=n;i++)d[i][0]=i;for(let j=0;j<=m;j++)d[0][j]=j;
+ for(let i=1;i<=n;i++)for(let j=1;j<=m;j++)d[i][j]=Math.min(d[i-1][j]+1,d[i][j-1]+1,d[i-1][j-1]+(E[i-1]===Sx[j-1]?0:1));
+ let i=n,j=m;const st=Array(n).fill(null),ex=[];
+ while(i>0||j>0){if(i>0&&j>0&&d[i][j]===d[i-1][j-1]+(E[i-1]===Sx[j-1]?0:1)){st[i-1]={ok:E[i-1]===Sx[j-1],s:j-1};i--;j--}
+  else if(i>0&&d[i][j]===d[i-1][j]+1){st[i-1]={ok:false,s:null};i--}else{ex.push(j-1);j--}}
+ return{st,ex}}
+/* ---------- voix ---------- */
+const TTS="speechSynthesis"in window;let VOX=[],voice=null,spd=0.85,pu=true;
+function loadV(){if(!TTS)return;VOX=speechSynthesis.getVoices().filter(v=>/^fr/i.test(v.lang));voice=VOX.find(v=>v.name==($("#vsel")||{}).value)||VOX.find(v=>/fr-FR/i.test(v.lang))||VOX[0]||null;const s=$("#vsel");if(s)s.innerHTML=VOX.map(v=>`<option${voice&&v.name==voice.name?" selected":""}>${esc(v.name)}</option>`).join("")}
+if(TTS){speechSynthesis.onvoiceschanged=loadV;loadV()}
+const pon=t=>t.replace(/[,.!?]/g,c=>({",":", virgule, ",".":", point. ","!":", point d’exclamation. ","?":", point d’interrogation. "}[c]));
+function say(t,sp){if(!TTS)return;speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(sp&&pu?pon(t):t);u.lang="fr-FR";if(voice)u.voice=voice;u.rate=spd;speechSynthesis.speak(u)}
+const voiceUI=()=>TTS?`<div class="it"><span style="min-width:0">Vitesse</span><input type="range" id="spd" min="0.5" max="1.2" step="0.05" value="${spd}" oninput="spd=+this.value;$('#sv').textContent=spd.toFixed(2)+'×'"><b id="sv">${spd.toFixed(2)}×</b><label><input type="checkbox" ${pu?"checked":""} onchange="pu=this.checked"> Dire la ponctuation à voix haute</label>${VOX.length>1?`<select id="vsel" aria-label="Voix" onchange="loadV()">${VOX.map(v=>`<option${voice&&v.name==voice.name?" selected":""}>${esc(v.name)}</option>`).join("")}</select>`:""}</div>`:`<p class="ko">Ton navigateur ne sait pas lire à voix haute : utilise Chrome, Edge ou Safari.</p>`;
+/* ---------- état et navigation ---------- */
+const MEN=s=>s>=16?"Très bien 🎉":s>=14?"Bien 👏":s>=12?"Assez bien 👍":s>=10?"Passable : tu y es presque":"À retravailler, mais tu vas progresser";
+let qs,ans,tid,end,onEnd,dic,toks,sgs,phase,idx,conf,aRes;
+const hist=()=>{try{return JSON.parse(localStorage.getItem("anfal_fr_h")||"[]")}catch(e){return[]}};
+const save=r=>{try{localStorage.setItem("anfal_fr_h",JSON.stringify([...hist(),r].slice(-10)))}catch(e){}};
+function timer(sec,fn){clearInterval(tid);end=Date.now()+sec*1000;onEnd=fn;tid=setInterval(tick,500);tick()}
+function tick(){const l=Math.max(0,Math.ceil((end-Date.now())/1000)),c=$("#clk");if(!c)return;c.textContent=String(Math.floor(l/60)).padStart(2,"0")+":"+String(l%60).padStart(2,"0");c.className=l<=120?"w":"";if(l<=0){clearInterval(tid);onEnd(true)}}
+function intro(){
+ const h=hist();clearInterval(tid);if(TTS)speechSynthesis.cancel();
+ $("#app").innerHTML=`<main><h1>Examen blanc<br>Français : la dictée</h1><p class="sm">Pour Anfal · 5<sup>e</sup> · Mots invariables et doublement des consonnes</p>
+ <div class="card"><h3>Comme en classe</h3><ul><li><b>Partie A (8 pts, 10 min)</b> : questions de cours sur les mots invariables et le doublement des consonnes.</li><li><b>Partie B (12 pts, 15 min)</b> : dictée audio. Tu écoutes le texte en entier, puis phrase par phrase (tu peux réécouter chaque phrase), puis une relecture. Tu tapes au clavier.</li><li>Barème de la dictée : une faute sur un mot invariable = −1 ; sur une consonne doublée = −0,75 ; sur un autre mot = −0,5 ; mot en trop = −0,25.</li><li><b>Tolérance</b> : accents, majuscules et ponctuation ne sont pas pénalisés ici (mais soigne-les à la main !). Les lettres du mot, elles, doivent être exactes.</li><li>La dictée change à chaque tentative. Mets le son et active ta voix française ci-dessous.</li></ul>
+ ${voiceUI()}<button class="alt" onclick="say('Bonjour Anfal, ceci est un test de la voix. Zut, point d’exclamation.',false)">🔊 Tester la voix</button></div>
+ ${h.length?`<div class="card"><h3>Tes tentatives</h3>${h.map((r,i)=>`<div class="row"><span>Tentative ${i+1} · ${r.d}</span><span>${dec(r.s)}/20</span></div>`).join("")}</div>`:""}
+ <button onclick="startA()">Commencer la partie A</button></main>`;
+}
+function startA(){qs=genA();ans=qs.map(q=>q.t=="s"?Array(q.items.length).fill(""):null);conf=false;let last=0;try{last=+localStorage.getItem("anfal_fr_last")||0}catch(e){}
+ dic=R(DIC.filter(d=>d.id!=last));try{localStorage.setItem("anfal_fr_last",dic.id)}catch(e){}
+ let html="",lt=-1;qs.forEach((q,i)=>{if(q.th!==lt){lt=q.th;html+=`<h2 style="margin-top:26px">${q.th?"Doublement des consonnes":"Mots invariables"} <span class="pt">4 pts</span></h2>`}
+  html+=`<div class="q"><div class="h"><span>Question ${i+1}</span><span class="pt">${q.pts} pt${q.pts>1?"s":""}</span></div><div>${q.html}</div>`+(q.t=="c"?q.opts.map((o,j)=>`<label class="opt"><input type="radio" name="q${i}" onchange="ans[${i}]=${j}">${o}</label>`).join(""):q.items.map((it,j)=>`<div class="it"><span>${it.l}</span><select aria-label="Réponse ${j+1}" onchange="ans[${i}][${j}]=this.value"><option value="">— choisir —</option>${it.o.map(o=>`<option>${o}</option>`).join("")}</select></div>`).join(""))+`</div>`});
+ $("#app").innerHTML=`<header class="bar"><div><b>Partie A · Questions de cours</b></div><div id="clk">10:00</div></header><main>${html}<div id="msg" role="status"></div><button onclick="subA()">Passer à la dictée</button></main>`;
+ window.scrollTo(0,0);timer(600,()=>endA())}
+function subA(){const m=qs.filter((q,i)=>q.t=="c"?ans[i]===null:ans[i].some(x=>x==="")).length;if(m&&!conf){conf=true;$("#msg").textContent=`Il reste ${m} question(s) incomplète(s). Appuie encore pour confirmer.`;return}endA()}
+function sA(q,a){return q.t=="c"?(a===q.ans?q.pts:0):q.items.reduce((s,it,j)=>s+(a[j]===it.c?q.pts/q.items.length:0),0)}
+function endA(){clearInterval(tid);aRes=qs.map((q,i)=>sA(q,ans[i]));
+ $("#app").innerHTML=`<main><h1>Partie B : la dictée</h1><div class="card"><p>Partie A terminée. Tu as maintenant <b>15 minutes</b> pour la dictée.</p><ul><li>1. Écoute le texte en entier (lecture initiale).</li><li>2. Puis écoute chaque phrase et tape-la : tu peux la réécouter autant que tu veux.</li><li>3. Relecture finale : écoute le texte en entier et corrige-toi.</li></ul><p class="sm">Le chronomètre démarre quand tu cliques sur le bouton.</p>${voiceUI()}</div><button onclick="startB()">Commencer la dictée</button></main>`;window.scrollTo(0,0)}
+function startB(){toks=parse(dic.s);sgs=segs(dic.s);phase=0;idx=0;
+ $("#app").innerHTML=`<header class="bar"><div><b>Partie B · Dictée</b><div class="sm">« ${dic.t} »</div></div><div id="clk">15:00</div></header><main><div class="card" id="ctl"></div><textarea id="tx" aria-label="Ta dictée" spellcheck="false" autocomplete="off" autocorrect="off" autocapitalize="off" placeholder="Tape ta dictée ici…"></textarea><div><button onclick="finB(false)">Rendre ma dictée</button></div></main>`;
+ ctl();timer(900,()=>finB(true))}
+function ctl(){let h=voiceUI();
+ if(phase==0)h+=`<p><b>Étape 1 :</b> écoute le texte en entier.</p><button onclick="say(plain(dic.s),false)">▶ Écouter le texte en entier</button><button class="alt" onclick="phase=1;idx=0;ctl();say(sgs[0],true)">Étape 2 : phrase par phrase →</button>`;
+ else if(phase==1)h+=`<p><b>Étape 2 :</b> phrase ${idx+1} sur ${sgs.length}</p><button onclick="say(sgs[idx],true)">↺ Écouter la phrase</button>${idx<sgs.length-1?`<button class="alt" onclick="idx++;ctl();say(sgs[idx],true)">Phrase suivante →</button>`:`<button class="alt" onclick="phase=2;ctl();say(plain(dic.s),false)">Étape 3 : relecture →</button>`}${TTS?"":`<p class="sm">Phrase : ${esc(sgs[idx])}</p>`}`;
+ else h+=`<p><b>Étape 3 :</b> relecture. Écoute le texte en entier et corrige-toi (consonnes doubles, mots invariables, mots oubliés).</p><button onclick="say(plain(dic.s),false)">▶ Écouter le texte en entier</button>`;
+ $("#ctl").innerHTML=h}
+function finB(auto){clearInterval(tid);if(TTS)speechSynthesis.cancel();
+ const txt=$("#tx").value,sr=txt.split(/\s+/).filter(w=>nz(w)),E=toks.map(t=>nz(t.w)),Sn=sr.map(nz),{st,ex}=align(E,Sn);
+ const W={i:1,d:0.75,o:0.5},cnt={i:[0,0],d:[0,0],o:[0,0]};let loss=ex.length*0.25,acc=0;
+ st.forEach((s,k)=>{const t=toks[k];cnt[t.ty][1]++;if(s.ok){cnt[t.ty][0]++;if(nk(sr[s.s])!==nk(t.w))acc++}else loss+=W[t.ty]});
+ const dS=Math.round(Math.max(0,12-loss)*4)/4,aS=aRes.reduce((a,b)=>a+b,0),s=aS+dS;
+ const got=[0,0],mx=[4,4];qs.forEach((q,i)=>got[q.th]+=aRes[i]);
+ const p=(c)=>c[1]?Math.round(100*c[0]/c[1]):100;
+ const pc=[Math.round(100*got[0]/4),Math.round(100*got[1]/4),p(cnt.i),p(cnt.d),p(cnt.o)];
+ const h=hist(),prev=h.length?h[h.length-1].s:null;save({d:new Date().toLocaleDateString("fr-FR"),s,pc});
+ const col=v=>v>=80?"var(--ok)":v>=50?"var(--wn)":"var(--ko)",lab=v=>v>=80?"Solide":v>=50?"Presque, à consolider":"À revoir en priorité";
+ const weak=pc.map((v,i)=>i).filter(i=>pc[i]<80).sort((a,b)=>pc[a]-pc[b]);
+ const body=toks.map((t,k)=>{const x=st[k];if(x.ok)return `<span class="ok">${esc(t.raw)}</span>`;
+  const H=HINT[nz(t.w)]||(t.ty=="i"?"mot invariable : jamais d’accord":t.ty=="d"?"consonne doublée à retenir":"");
+  return `<span class="ko">${esc(t.raw)}</span><small> (${x.s===null?"oublié":"tu as écrit « "+esc(sr[x.s])+" »"}${H?" · "+H:""})</small>`}).join(" ");
+ const wrong=st.filter(x=>!x.ok).length;
+ $("#app").innerHTML=`<main><h1>Ta copie corrigée</h1>${auto?`<p class="ko">Temps écoulé : la dictée a été rendue automatiquement.</p>`:""}
+ <div class="card"><div class="big">${dec(s)}<span style="font-size:32px">/20</span></div><h3 style="margin-top:6px">${MEN(s)}</h3><p class="sm">Partie A : ${dec(aS)}/8 · Dictée : ${dec(dS)}/12${prev!==null?` · Tentative précédente : ${dec(prev)}/20 (${s-prev>=0?"+":""}${dec(Math.round((s-prev)*10)/10)})`:""}</p></div>
+ <h2>Ton score par thème</h2>${pc.map((v,i)=>`<div class="card" style="margin:10px 0"><div class="row"><span>${THEMES[i]}</span><span style="color:${col(v)}">${v} %</span></div><div class="bar2"><b style="width:${v}%;background:${col(v)}"></b></div><div class="sm">${lab(v)}${i>1?` · ${[cnt.i,cnt.d,cnt.o][i-2][0]}/${[cnt.i,cnt.d,cnt.o][i-2][1]} mots justes`:""}</div></div>`).join("")}
+ <div class="card"><h3>Ce qu’il faut retravailler</h3>${weak.length?`<ul>${weak.map(i=>`<li><b>${THEMES[i]}</b> (${pc[i]} %) : ${TIPS[i]}</li>`).join("")}</ul>`:"<p>Tout est solide. Bravo !</p>"}</div>
+ <h2>Correction de la dictée « ${dic.t} »</h2><div class="card dtx">${body}</div>
+ <p class="sm">${wrong} mot(s) faux sur ${toks.length}${ex.length?`, ${ex.length} mot(s) en trop`:""}.${acc?` <span class="am">${acc} mot(s) avec un accent oublié ou différent : non pénalisé ici, mais à surveiller à la main.</span>`:""}</p>
+ <div class="card"><b>Ce que tu as tapé :</b><div class="ex">${esc(txt)||"(rien)"}</div></div>
+ <h2>Correction de la partie A</h2>${qs.map((q,i)=>{const e=aRes[i],a=ans[i],cl=e>=q.pts?"good":e>0?"mid":"bad";
+  const b=q.t=="c"?`<div class="sm">Ta réponse : ${a===null?"(pas de réponse)":q.opts[a]}</div>${e?"":`<div>Bonne réponse : <b>${q.show}</b></div>`}`:q.items.map((it,j)=>{const o=a[j]===it.c;return `<div>${o?"✓":"✗"} ${it.l} : ${a[j]||"(pas de réponse)"}${o?"":` → <b>${it.c}</b>`}</div>`}).join("");
+  return `<div class="q ${cl}"><div class="h"><span>Question ${i+1}</span><span class="pt">${dec(e)}/${q.pts}</span></div><div>${q.html}</div>${b}<div class="ex">${q.expl}</div></div>`}).join("")}
+ <button onclick="startA()">Refaire un examen (nouvelle dictée)</button><button class="alt" onclick="intro()">Accueil</button></main>`;
+ window.scrollTo(0,0)}
+intro();
+</script>
+</body>
+</html>
